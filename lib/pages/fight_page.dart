@@ -115,32 +115,7 @@ class FightPageState extends State<FightPage> {
         yourLives -= 1;
       }
 
-      if (yourLives == 0 && enemysLives == 0) {
-        textResult = 'Drow';
-      }
-      if (enemysLives == 0) {
-        textResult = 'You won';
-      }
-      if (yourLives == 0) {
-        textResult = 'You lost';
-      }
-
-      if (yourLives != 0 && enemysLives != 0) {
-        if (attackingBodyPart == whatEnemyDefend) {
-          textResult = 'Your attack was blocked.\n\n';
-        } else {
-          textResult =
-              'You hit enemy’s ${attackingBodyPart!.name.toLowerCase()}.\n\n';
-        }
-
-        if (whatEnemyAttack == defendingBodyPart) {
-          textResult = '$textResult Enemy’s attack was blocked.';
-        } else {
-          textResult =
-              '$textResult Enemy hit your ${whatEnemyAttack.name.toLowerCase()}.';
-        }
-      }
-
+      textResult = _textResult();
       whatEnemyDefend = BodyPart.random();
       whatEnemyAttack = BodyPart.random();
 
@@ -156,6 +131,36 @@ class FightPageState extends State<FightPage> {
     setState(() {
       defendingBodyPart = value;
     });
+  }
+
+  String _textResult() {
+    if (yourLives == 0 && enemysLives == 0) {
+      textResult = 'Drow';
+    }
+    if (enemysLives == 0) {
+      textResult = 'You won';
+    }
+    if (yourLives == 0) {
+      textResult = 'You lost';
+    }
+
+    if (yourLives != 0 && enemysLives != 0) {
+      if (attackingBodyPart == whatEnemyDefend) {
+        textResult = 'Your attack was blocked.\n\n';
+      } else {
+        textResult =
+            'You hit enemy’s ${attackingBodyPart!.name.toLowerCase()}.\n\n';
+      }
+
+      if (whatEnemyAttack == defendingBodyPart) {
+        textResult = '$textResult Enemy’s attack was blocked.';
+      } else {
+        textResult =
+            '$textResult Enemy hit your ${whatEnemyAttack.name.toLowerCase()}.';
+      }
+    }
+
+    return textResult;
   }
 
   void _selectattackingBodyPart(final BodyPart value) {
