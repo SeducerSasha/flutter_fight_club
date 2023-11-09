@@ -1,10 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_fight_club/fight_result.dart';
 import 'package:flutter_fight_club/resources/fight_club_colors.dart';
 import 'package:flutter_fight_club/resources/fight_club_icons.dart';
 import 'package:flutter_fight_club/resources/fight_club_images.dart';
 import 'package:flutter_fight_club/widgets/action_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FightPage extends StatefulWidget {
   const FightPage({super.key});
@@ -115,6 +117,15 @@ class FightPageState extends State<FightPage> {
         yourLives -= 1;
       }
 
+      if (yourLives == 0 || enemysLives == 0) {
+        final FightResult? fightResult =
+            FightResult.getFightResult(yourLives, enemysLives);
+
+        if (fightResult != null) {
+          SharedPreferences.getInstance().then((sharedPrefs) =>
+              sharedPrefs.setString('LastFightResult', fightResult.result));
+        }
+      }
       textResult = _textResult();
       whatEnemyDefend = BodyPart.random();
       whatEnemyAttack = BodyPart.random();
@@ -135,12 +146,12 @@ class FightPageState extends State<FightPage> {
 
   String _textResult() {
     if (yourLives == 0 && enemysLives == 0) {
-      textResult = 'Drow';
+      textResult = 'Draw';
     }
-    if (enemysLives == 0) {
+    if (enemysLives == 0 && yourLives > 0) {
       textResult = 'You won';
     }
-    if (yourLives == 0) {
+    if (yourLives == 0 && enemysLives > 0) {
       textResult = 'You lost';
     }
 
