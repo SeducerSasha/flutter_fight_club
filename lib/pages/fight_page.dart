@@ -20,6 +20,9 @@ class FightPageState extends State<FightPage> {
   int yourLives = maxLives;
   int enemysLives = maxLives;
   String textResult = '';
+  int countDraw = 0;
+  int countLost = 0;
+  int countWon = 0;
 
   BodyPart? defendingBodyPart;
   BodyPart? attackingBodyPart;
@@ -86,6 +89,30 @@ class FightPageState extends State<FightPage> {
     );
   }
 
+  void getPrefs() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? statsDraw = prefs.getInt('stats_draw');
+    int? statsLost = prefs.getInt('stats_lost');
+    int? statsWon = prefs.getInt('stats_won');
+
+    if (statsDraw == null) {
+      countDraw = 0;
+    } else {
+      countDraw = statsDraw;
+    }
+
+    if (statsLost == null) {
+      countLost = 0;
+    } else {
+      countLost = statsLost;
+    }
+    if (statsWon == null) {
+      countWon = 0;
+    } else {
+      countWon = statsWon;
+    }
+  }
+
   Color _getGoButtonColor() {
     if (yourLives == 0 || enemysLives == 0) {
       return FightClubColors.blackButton;
@@ -124,6 +151,18 @@ class FightPageState extends State<FightPage> {
         if (fightResult != null) {
           SharedPreferences.getInstance().then((sharedPrefs) =>
               sharedPrefs.setString('LastFightResult', fightResult.result));
+          if (fightResult == FightResult.draw) {
+            SharedPreferences.getInstance().then(
+                (sharedPrefs) => sharedPrefs.setInt('stats_draw', countDraw++));
+          }
+          if (fightResult == FightResult.lost) {
+            SharedPreferences.getInstance().then(
+                (sharedPrefs) => sharedPrefs.setInt('stats_lost', countLost++));
+          }
+          if (fightResult == FightResult.won) {
+            SharedPreferences.getInstance().then(
+                (sharedPrefs) => sharedPrefs.setInt('stats_won', countWon++));
+          }
         }
       }
       textResult = _textResult();

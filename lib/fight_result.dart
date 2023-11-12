@@ -8,6 +8,16 @@ class FightResult {
   static const lost = FightResult._('Lost');
   static const draw = FightResult._('Draw');
 
+  static returnFightResult(final String result) {
+    if (result == 'Won') {
+      return won;
+    } else if (result == 'Lost') {
+      return lost;
+    } else {
+      return draw;
+    }
+  }
+
   static FightResult? getFightResult(
       final int yourLives, final int enemysLives) {
     if (yourLives == 0 && enemysLives == 0) {
