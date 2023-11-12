@@ -32,6 +32,7 @@ class FightPageState extends State<FightPage> {
 
   @override
   Widget build(BuildContext context) {
+    getPrefs();
     return Scaffold(
       backgroundColor: FightClubColors.background,
       body: SafeArea(
@@ -152,16 +153,16 @@ class FightPageState extends State<FightPage> {
           SharedPreferences.getInstance().then((sharedPrefs) =>
               sharedPrefs.setString('LastFightResult', fightResult.result));
           if (fightResult == FightResult.draw) {
-            SharedPreferences.getInstance().then(
-                (sharedPrefs) => sharedPrefs.setInt('stats_draw', countDraw++));
+            SharedPreferences.getInstance().then((sharedPrefs) =>
+                sharedPrefs.setInt('stats_draw', countDraw + 1));
           }
           if (fightResult == FightResult.lost) {
-            SharedPreferences.getInstance().then(
-                (sharedPrefs) => sharedPrefs.setInt('stats_lost', countLost++));
+            SharedPreferences.getInstance().then((sharedPrefs) =>
+                sharedPrefs.setInt('stats_lost', countLost + 1));
           }
           if (fightResult == FightResult.won) {
             SharedPreferences.getInstance().then(
-                (sharedPrefs) => sharedPrefs.setInt('stats_won', countWon++));
+                (sharedPrefs) => sharedPrefs.setInt('stats_won', countWon + 1));
           }
         }
       }
