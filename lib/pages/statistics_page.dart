@@ -15,79 +15,55 @@ class StatisticPage extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(vertical: 24),
-            child: const Text('Statistics'),
-          ),
-          Expanded(
-            child: Center(
-              child: SizedBox(
-                height: 132,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: FutureBuilder<int?>(
-                          future: SharedPreferences.getInstance().then(
-                              (sharedPrefs) => sharedPrefs.getInt('stats_won')),
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData || snapshot.data == null) {
-                              return const Text(
-                                'Won: 0',
-                                style: TextStyle(fontSize: 16),
-                              );
-                            }
-                            return Text(
-                              'Won: ${snapshot.data}',
-                              style: TextStyle(fontSize: 16),
-                            );
-                          }),
-                    ),
-                    Expanded(
-                      child: FutureBuilder<int?>(
-                          future: SharedPreferences.getInstance().then(
-                              (sharedPrefs) =>
-                                  sharedPrefs.getInt('stats_draw')),
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData || snapshot.data == null) {
-                              return const Text(
-                                'Draw: 0',
-                                style: TextStyle(fontSize: 16),
-                              );
-                            }
-                            return Text(
-                              'Draw: ${snapshot.data}',
-                              style: TextStyle(fontSize: 16),
-                            );
-                          }),
-                    ),
-                    Expanded(
-                      child: FutureBuilder<int?>(
-                          future: SharedPreferences.getInstance().then(
-                              (sharedPrefs) =>
-                                  sharedPrefs.getInt('stats_lost')),
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData || snapshot.data == null) {
-                              return const Text(
-                                'Lost: 0',
-                                style: TextStyle(fontSize: 16),
-                              );
-                            }
-                            return Text(
-                              'Lost: ${snapshot.data}',
-                              style: TextStyle(fontSize: 16),
-                            );
-                          }),
-                    ),
-                  ],
-                ),
-              ),
+            child: const Text(
+              'Statistics',
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w400,
+                  color: FightClubColors.darkGreyText),
             ),
           ),
+          const Expanded(child: SizedBox.shrink()),
+          FutureBuilder<SharedPreferences>(
+              future: SharedPreferences.getInstance(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData || snapshot.data == null) {
+                  return const SizedBox();
+                }
+                final SharedPreferences sharedPrefs = snapshot.data!;
+                return Column(
+                  children: [
+                    Text(
+                      'Won: ${sharedPrefs.getInt('stats_won') ?? 0}',
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Text(
+                      'Draw: ${sharedPrefs.getInt('stats_draw') ?? 0}',
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Text(
+                      'Lost: ${sharedPrefs.getInt('stats_lost') ?? 0}',
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                  ],
+                );
+              }),
+          const Expanded(child: SizedBox.shrink()),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: SecondaryActionButton(
                 onTap: () {
                   Navigator.of(context).pop();
                 },
-                color: Colors.transparent,
                 text: 'Back'),
           ),
         ],

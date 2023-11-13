@@ -3,13 +3,11 @@ import 'package:flutter_fight_club/resources/fight_club_colors.dart';
 
 class SecondaryActionButton extends StatelessWidget {
   final VoidCallback onTap;
-  final Color color;
   final String text;
 
   const SecondaryActionButton({
     super.key,
     required this.onTap,
-    required this.color,
     required this.text,
   });
 
@@ -18,16 +16,17 @@ class SecondaryActionButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        decoration: BoxDecoration(border: Border.all(width: 2), color: color),
+        decoration: BoxDecoration(
+            border: Border.all(width: 2, color: FightClubColors.darkGreyText)),
         height: 40,
         alignment: Alignment.center,
         margin: const EdgeInsets.symmetric(horizontal: 16),
         child: Text(
           text.toUpperCase(),
           style: const TextStyle(
-              fontWeight: FontWeight.w900,
-              fontSize: 16,
-              color: FightClubColors.blackButton),
+              fontWeight: FontWeight.w400,
+              fontSize: 13,
+              color: FightClubColors.darkGreyText),
         ),
       ),
     );

@@ -15,15 +15,6 @@ class FightResultWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color colorBackgroundResult = const Color(0xFF1C79CE);
-    if (fightResult.result == FightResult.draw.result) {
-      colorBackgroundResult = const Color(0xFF1C79CE);
-    } else if (fightResult.result == FightResult.lost.result) {
-      colorBackgroundResult = const Color(0xFFEA2C2C);
-    } else if (fightResult.result == FightResult.won.result) {
-      colorBackgroundResult = const Color.fromRGBO(3, 136, 0, 1);
-    }
-
     return SizedBox(
       height: 140,
       child: Stack(
@@ -52,18 +43,17 @@ class FightResultWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 12,
-                  ),
                   const Text(
                     'You',
                     style: TextStyle(
-                      color: FightClubColors.blackButton,
+                      color: FightClubColors.darkGreyText,
+                      fontSize: 14,
                     ),
                   ),
                   const SizedBox(
-                    height: 12,
+                    height: 10,
                   ),
                   SizedBox(
                     width: 92,
@@ -72,38 +62,13 @@ class FightResultWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(),
-              Column(
-                children: [
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  const Text(
-                    'Enemy',
-                    style: TextStyle(
-                      color: FightClubColors.blackButton,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  SizedBox(
-                    width: 92,
-                    height: 92,
-                    child: Image.asset(FightClubImages.enemyAvatar),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Center(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: colorBackgroundResult,
-                borderRadius: BorderRadius.circular(22),
-              ),
-              child: SizedBox(
-                width: 88,
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                decoration: BoxDecoration(
+                  color: fightResult.color,
+                  borderRadius: BorderRadius.circular(22),
+                ),
                 height: 44,
                 child: Center(
                   child: Text(
@@ -113,7 +78,27 @@ class FightResultWidget extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Enemy',
+                    style: TextStyle(
+                      color: FightClubColors.darkGreyText,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    width: 92,
+                    height: 92,
+                    child: Image.asset(FightClubImages.enemyAvatar),
+                  ),
+                ],
+              ),
+            ],
           ),
         ],
       ),

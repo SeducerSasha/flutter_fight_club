@@ -45,6 +45,7 @@ class _MainPageContent extends StatelessWidget {
                     return const SizedBox();
                   }
                   return Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       const Text(
                         'Last fight result',
@@ -66,7 +67,6 @@ class _MainPageContent extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const StatisticPage()));
               },
-              color: Colors.transparent,
               text: 'Statistics',
             ),
             const SizedBox(
